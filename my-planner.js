@@ -149,7 +149,7 @@ window.toggleSunnah = function(prayer, isChecked) {
   renderAll();
 };
 
-// fasting trcker
+/// fasting tracker
 function renderFasting(dayData) {
   const list = document.getElementById('fastingList');
   const select = document.getElementById('fastingTypeSelect');
@@ -268,7 +268,7 @@ function renderZikir(dayData) {
     targetText.style.display = 'none';
   }
 
-    const sessionsList = document.getElementById('zikirSessionsList');
+  const sessionsList = document.getElementById('zikirSessionsList');
   sessionsList.innerHTML = '';
   if (dayData.zikirSessions.length === 0) {
     sessionsList.innerHTML = '<li class="section-desc">No sessions saved today.</li>';
@@ -404,7 +404,6 @@ document.getElementById('openSunnahSettings').onclick = () => {
   const rawatibBox = document.getElementById('rawatibOptionsList');
   const currentRawatib = getStorage('solattime_prefs_rawatib', []);
   
-// structure header
   let rawatibHTML = `
     <div></div>
     <div class="rawatib-header">before</div>
