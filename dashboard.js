@@ -199,7 +199,7 @@ function tick() {
   const period = getCurrentPeriod(state.timings, nowMin);
   currentName.textContent = period.name;
 
-    // --- SUGGESTION LOGIC ---
+    /// suggestion logic
   let suggestion = "";
   switch(period.name) {
     case 'fajr':
@@ -244,7 +244,7 @@ function tick() {
   });
 }
 
-// auto detect location
+/// auto detect location
 async function initApp() {
   if (!navigator.geolocation) {
     fetchFallback();
@@ -425,7 +425,7 @@ document.getElementById('personalStatus').addEventListener('change', (e) => {
 
 renderPrayerLog();
 
-/// searach location function
+/// search location function
 async function searchCity() {
   const city = document.getElementById('cityInput').value.trim();
   if (!city) {
