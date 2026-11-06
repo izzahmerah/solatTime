@@ -342,11 +342,11 @@ function renderPrayerLog() {
   let savedGender = localStorage.getItem('solattime_gender') || 'muslimin';
   genderSelect.value = savedGender;
 
-  if (savedGender === 'muslimah' || savedGender === 'muslimah') {
-    statusContainer.classList.remove('hidden');
-  } else {
-    statusContainer.classList.add('hidden');
-  }
+  if (savedGender === 'muslimah') {
+  statusContainer.classList.remove('hidden');
+} else {
+  statusContainer.classList.add('hidden');
+}
 
   if (!dateInput.value) dateInput.value = getLocalDateStr();
 
