@@ -1,0 +1,821 @@
+/* ==========================================================================
+   BASE VARIABLES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --text-main: #333333;
+  --text-light: #5B9BD5; 
+  --text-muted: #666666;
+  --bg-base: #e8eff3;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.6);
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text-main);
+  height: 100vh;
+  background-color: var(--bg-base);
+  background-image: url('background.png'); 
+  background-size: 105% 105% !important; 
+  background-position: center center !important;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden; 
+
+}
+body, input, select, textarea, button {
+  text-transform: lowercase !important;
+}
+
+::placeholder {
+  text-transform: lowercase !important;
+}
+
+.brand-name {
+   text-transform: none !important; 
+   font-size: 1.6rem; 
+}
+
+#currentDisplayDate {
+  text-transform: none !important; 
+}
+
+.hidden { display: none !important; }
+
+/* ==========================================================================
+   2. MAIN LAYOUT & NAVIGATION
+   ========================================================================== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 2rem 3rem;
+  overflow-y: auto; 
+}
+
+/* scrollbar */
+.app-container::-webkit-scrollbar { width: 8px; }
+.app-container::-webkit-scrollbar-track { background: transparent; }
+.app-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active { color: var(--text-main); }
+
+.divider {
+  border: none;
+  border-top: 1px solid rgba(51, 51, 51, 0.2);
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   3. DASHBOARD PAGE
+   ========================================================================== */
+.dashboard-view {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 4rem); 
+}
+
+.dashboard-main {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.top-right-clock {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.top-right-clock h1 {
+  font-size: clamp(6rem, 12vw, 11rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  font-family: 'Playfair Display', serif;
+}
+
+.current-status {
+  margin-top: 8rem;
+  margin-bottom: 2rem; 
+  max-width: 60%;
+}
+
+.location {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-transform: lowercase;
+}
+
+.current-prayer {
+  font-size: clamp(4rem,10vw,8rem);
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 1;
+  font-family: 'Playfair Display', serif;
+  text-transform: lowercase;
+  margin-bottom: 0.5rem;
+}
+
+.time-left {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.timeline-grid {
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+  margin-bottom: 6rem;
+}
+
+.time-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.time-card .time-name {
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-transform: lowercase;
+  font-family: 'Inter', sans-serif
+}
+
+.time-card .time-value {
+  font-size: clamp(1rem); 
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+.time-card.current .time-name { font-weight: 800; }
+
+/* --- LOCATION SEARCH BAR --- */
+.location-search-box {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.location-search-box input {
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(51, 51, 51, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  width: 300px;
+  outline: none;
+  transition: 0.2s;
+}
+
+/* location search bar */
+.location-search-box {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem; 
+}
+
+.location-search-box input {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.5); 
+  border-radius: 50px; 
+  background: rgba(255, 255, 255, 0.25); 
+  backdrop-filter: blur(10px); 
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  width: 240px; 
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem 1.2rem;
+}
+
+.location-search-box input::placeholder {
+  color: rgba(51, 51, 51, 0.5); 
+}
+
+.location-search-box input:focus {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.location-search-box button {
+  padding: 0.5rem 1.2rem;
+  background: rgba(51, 51, 51, 0.6); 
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.location-search-box button:hover {
+  background: rgba(51, 51, 51, 0.8);
+}
+
+/* ==========================================================================
+   4. PRAYER LOG SECTION 
+   ========================================================================== */
+.prayer-log-container {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 4rem;
+  margin-top: 3rem;
+}
+
+.prayer-log-section {
+  width: 100%;
+  max-width: 1000px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.prayer-log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  background: rgba(255,255,255,0.5);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+.form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+.input-field {
+  padding: 0.5rem;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  background: white;
+}
+.progress-text { font-weight: 700; font-size: 1.1rem; color: var(--text-light); }
+
+.prayer-log-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.prayer-log-grid .check-item {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   5. MY PLANNER PAGE
+   ========================================================================== */
+.planner-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.planner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.date-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Weekly Selector */
+.weekly-selector { display: flex; gap: 0.5rem; }
+
+.date-pill {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(51, 51, 51, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s;
+}
+.date-pill:hover { background: rgba(255, 255, 255, 0.8); }
+.date-pill.active { background: var(--text-main); color: white; border-color: var(--text-main); }
+.date-pill .day-name { font-size: 0.7rem; text-transform: uppercase; }
+.date-pill .day-num { font-weight: 700; font-size: 1.1rem; }
+
+.date-pill.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none; 
+  background: transparent;
+  border-color: rgba(51, 51, 51, 0.1);
+}
+
+/* weekly overview card */
+.weekly-overview-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 12px;
+  min-width: 280px;
+}
+.weekly-overview-card h3 { margin-bottom: 1rem; font-size: 1rem; }
+
+.weekly-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+.stat-item { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.stat-icon { display: flex; justify-content: center; color: var(--text-main); margin-bottom: 0.2rem; }
+.stat-val { font-weight: 700; font-size: 1.1rem; }
+.stat-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: lowercase; }
+
+.main-checklist-grid {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.planner-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  flex: 1;
+}
+
+.section-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.section-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+
+/* ==========================================================================
+   6. CHECKLISTS & BUTTONS (Consolidated)
+   ========================================================================== */
+.checklist { list-style: none; }
+
+.check-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.check-item label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1;
+}
+
+input[type="checkbox"].round-cb,
+.check-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #888;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  background: white;
+  margin: 0;
+  transition: all 0.2s;
+}
+
+input[type="checkbox"].round-cb:checked,
+.check-item input[type="checkbox"]:checked { border-color: var(--text-light); }
+
+input[type="checkbox"].round-cb:checked::after,
+.check-item input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
+  background: var(--text-light);
+  border-radius: 50%;
+}
+
+.check-item.completed label { text-decoration: line-through; color: var(--text-muted); }
+
+/* buttons */
+.btn-small {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+.btn-primary { background: var(--text-main); color: white; }
+.btn-primary:hover { opacity: 0.8; }
+.btn-outline { background: transparent; border: 1px solid var(--text-main); color: var(--text-main); }
+.btn-outline:hover { background: rgba(0,0,0,0.05); }
+.btn-delete { background: transparent; color: #d9534f; border: none; cursor: pointer; font-weight: bold; font-size: 1.2rem; }
+
+.btn-icon-delete {
+  background: transparent; border: none; color: #666;
+  cursor: pointer; padding: 0.4rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: 0.2s;
+}
+.btn-icon-delete:hover { color: #d9534f; background: rgba(217, 83, 79, 0.1); }
+
+.btn-save-pill {
+  background: #e2ebf0; color: #333; border: none;
+  padding: 0.6rem 1.5rem; border-radius: 20px;
+  font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.2s;
+}
+.btn-save-pill:hover { background: #d0e0e8; }
+
+/* dhikr button */
+.zikir-session-actions {
+  display: flex;
+  justify-content: flex-end; 
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; 
+}
+
+#saveZikirSession {
+  width: 30%;
+  padding: 0.7rem;
+  font-size: 0.95rem;
+  border-radius: 50px; 
+  margin-top: 1rem;
+}
+
+#saveZikirSession:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   7. FASTING TRACKER & ZIKIR COUNTER
+   ========================================================================== */
+
+.fasting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.fasting-item .btn-icon-delete {
+  padding: 0.2rem;
+  border-radius: 4px;
+}
+.fasting-item .btn-icon-delete:hover {
+  background: rgba(217, 83, 79, 0.1);
+  color: #d9534f;
+}
+
+#fastingList {
+  margin-bottom: 1.5rem; 
+}
+
+#addFastingBtn {
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.status-pill {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+
+  user-select: none; 
+  -webkit-user-select: none; 
+}
+
+.status-delete {
+  background: #333;
+  color: white;
+  border: 1px solid #333;
+}
+
+.status-delete:hover {
+  background: #d9534f; 
+  border-color: #d9534f;
+}
+
+.status-completed { background: #d4edda; color: #155724; }
+.status-planned { background: #fff3cd; color: #856404; }
+.status-missed { background: #f8d7da; color: #721c24; }
+.status-na { background: #e2e3e5; color: #383d41; }
+
+.dhikr-scroll-container {
+  display: flex; gap: 0.5rem; overflow-x: auto;
+  padding-bottom: 0.5rem; margin-bottom: 1rem;
+}
+.dhikr-btn {
+  white-space: nowrap; padding: 0.5rem 1rem; border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.1); background: white; cursor: pointer;
+}
+.dhikr-btn.active { background: var(--text-light); color: white; border-color: var(--text-light); }
+
+.zikir-display {
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(0,0,0,0.03); border-radius: 12px;
+  padding: 2rem 1rem; margin-bottom: 1rem; gap: 1.5rem;
+}
+#zikirCount {
+  font-family: 'Playfair Display', serif; font-size: 5rem;
+  color: var(--text-main); line-height: 1;
+  letter-spacing: 6px;
+}
+.target-presets { display: flex; gap: 0.5rem; }
+.target-btn { padding: 0.3rem 0.8rem; border-radius: 15px; border: 1px solid #ccc; background: transparent; cursor: pointer; }
+.target-btn.active { background: var(--text-main); color: white; }
+
+.zikir-controls { display: flex; gap: 1rem; align-items: center; }
+.btn-round {
+  width: 50px; height: 50px; border-radius: 50%; border: none; background: white;
+  font-size: 1.5rem; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;
+}
+.btn-large { width: 70px; height: 70px; font-size: 2rem; background: var(--text-light); color: white; }
+
+.session-list { list-style: none; margin-top: 1rem; }
+.session-item {
+  display: flex; justify-content: space-between; padding: 0.8rem; 
+  background: white; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   8. MODALS & FEEDBACK UI
+   ========================================================================== */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-content {
+  background: white; padding: 2rem; border-radius: 12px; 
+  width: 700px; max-width: 95%; max-height: 85vh; overflow-y: auto;
+}
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+.close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+
+.modal-body-grid { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+.settings-box {
+  flex: 1; background: #f0f4f8; border: 1px solid #ccc; border-radius: 10px; padding: 1.2rem;
+}
+.settings-box h3 { font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; }
+
+ 
+.modal-footer {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 1.5rem !important;
+  clear: both;
+}
+
+.modal-footer .btn-primary {
+  width: 100% !important; 
+  padding: 0.9rem !important;
+  background: var(--text-main) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: 0.2s !important;
+}
+
+.modal-footer .btn-primary:hover {
+  background: #222 !important;
+}
+
+.sunnah-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+.round-label { display: flex; align-items: center; gap: 0.8rem; cursor: pointer; font-weight: 500; }
+
+.rawatib-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 45px 45px !important; 
+  row-gap: 12px !important;
+  align-items: center !important;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.rawatib-header {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  color: #666 !important;
+  text-align: center !important;
+}
+
+.rawatib-row-label {
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+}
+
+.rawatib-cell {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.rawatib-cell input[type="checkbox"] {
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+}
+
+.rawatib-cell input[type="checkbox"]:checked::after {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.empty-cell {
+  color: #aaa;
+  font-weight: bold;
+}
+
+.error-banner {
+  background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
+  padding: 1rem; border-radius: 8px; display: flex;
+  justify-content: space-between; align-items: center; font-weight: 600;
+  margin-bottom: 1rem;
+}
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem; background: var(--text-main); color: white;
+  padding: 1rem 2rem; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 1000; animation: slideIn 0.3s ease;
+}
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* ==========================================================================
+   RESPONSIVE DESIGN FOR MOBILE
+   ========================================================================== */
+@media (max-width: 768px) {
+  
+  .app-container {
+    padding: 1.5rem;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .main-nav {
+    width: 100%;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .dashboard-view {
+    min-height: auto;
+    padding-bottom: 3rem;
+  }
+
+  .dashboard-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    justify-content: flex-start;
+    margin-top: 0;
+    flex: none; 
+  }
+
+
+  .top-right-clock {
+    position: static !important; 
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .top-right-clock h1 {
+    font-size: 5rem;
+  }
+
+  .current-status {
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .location {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .current-prayer {
+    font-size: 6rem; 
+    margin-bottom: 0.5rem;
+  }
+
+  .time-left {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  #suggestionText {
+    font-size: 0.9rem !important;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+
+  .timeline-section {
+    width: 100%;
+    padding: 0;
+  }
+
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 1.5rem 1rem;
+    text-align: center;
+  }
+
+  .time-card {
+    align-items: center;
+  }
+
+  .location-search-box {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .location-search-box input,
+  .location-search-box button {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+}
